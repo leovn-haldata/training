@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_active',
+        'is_delete',
+        'group_role',
     ];
 
     /**
@@ -41,7 +44,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
-    protected $table = 'mst_users';
+
+    protected $table = 'users';
 
 }
