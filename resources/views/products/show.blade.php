@@ -20,7 +20,7 @@
                             {{ trans('cruds.product.fields.id') }}
                         </th>
                         <td>
-                            {{ $product ?? ''->product_id }}
+                            {{ $product->product_id }}
                         </td>
                     </tr>
                     <tr>
@@ -28,7 +28,7 @@
                             {{ trans('cruds.product.fields.name') }}
                         </th>
                         <td>
-                            {{ $product ?? ''->product_name }}
+                            {{ $product->product_name }}
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
                             {{ trans('cruds.product.fields.description') }}
                         </th>
                         <td>
-                            {{ $product ?? ''->description }}
+                            {{ $product->description }}
                         </td>
                     </tr>
                     <tr>
@@ -44,7 +44,7 @@
                             {{ trans('cruds.product.fields.price') }}
                         </th>
                         <td>
-                            {{!! $product ?? ''->product_price !!}}
+                            {{ $product->product_price }}
                         </td>
                     </tr>
                     <tr>
@@ -52,7 +52,7 @@
                             {{ trans('cruds.product.fields.category') }}
                         </th>
                         <td>
-{{--                            @foreach($product ?? ''->categories as $key => $category)--}}
+{{--                            @foreach($product->categories as $key => $category)--}}
 {{--                                <span class="label label-info">{{ $category->name }}</span>--}}
 {{--                            @endforeach--}}
                         </td>
@@ -62,7 +62,7 @@
                             {{ trans('cruds.product.fields.tag') }}
                         </th>
                         <td>
-{{--                            @foreach($product ?? ''->tags as $key => $tag)--}}
+{{--                            @foreach($product->tags as $key => $tag)--}}
 {{--                                <span class="label label-info">{{ $tag->name }}</span>--}}
 {{--                            @endforeach--}}
                         </td>
@@ -72,9 +72,9 @@
                             {{ trans('cruds.product.fields.photo') }}
                         </th>
                         <td>
-                            @if($product ?? ''->photo)
-                                <a href="{{ $product ?? ''->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $product ?? ''->photo->getUrl('thumb') }}">
+                            @if($product->photo)
+                                <a href="{{ $product->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $product->photo->getUrl('thumb') }}">
                                 </a>
                             @endif
                         </td>
@@ -82,7 +82,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('products.index') }}">
+                <a class="btn btn-success" href="{{ route('products.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

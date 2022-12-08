@@ -24,8 +24,11 @@ class ProductsDataTable extends DataTable
 
         return datatables()
             ->eloquent($query)
+            ->addColumn('description', function ($row) {
+                return substr($row->description, 0, 50);
+            })
             ->addColumn('action', function($row) {
-                $url = url('/products/') . $row->product_id;
+                $url = url('/products') . '/'. $row->product_id;
                 $btn = '<a target="blank" href="' . $url . '" class="edit btn btn-info btn-sm">View</a>';
                 $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Edit</a>';
                 $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-danger btn-sm">Delete</a>';
@@ -75,14 +78,15 @@ class ProductsDataTable extends DataTable
                 ->searchable(true)
                 ->orderable(true),
             Column::make('product_name')->title('Product Name'),
-            Column::make('description')->title('description'),
+            Column::make('description')->title('Description')
+            ->content(100),
             Column::make('product_price')->title('Price'),
             Column::make('is_sales')->title('Status'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(true)
                 ->printable(true)
-                ->width(60)
+                ->width("30%")
                 ->addClass('text-center'),
             ];
     }
