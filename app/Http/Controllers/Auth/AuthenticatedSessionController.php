@@ -34,6 +34,19 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+
+        try {
+            User::where('id', Auth::id())->update([
+                'last_login_at' => now(),
+                'last_login_ip' => $request->ip(),
+
+            ]);
+        } catch (Throwable $e) {
+            report($e);
+
+            return false;
+        }
+
         return redirect()->route('products.index');
     }
     /**
