@@ -28,10 +28,20 @@ class ProductsDataTable extends DataTable
                 return substr($row->description, 0, 50);
             })
             ->addColumn('action', function($row) {
-                $url = url('/products') . '/'. $row->product_id;
-                $btn = '<a target="blank" href="' . $url . '" class="edit btn btn-info btn-sm">View</a>';
-                $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Edit</a>';
-                $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-danger btn-sm">Delete</a>';
+                $url_view = route('products.show',[$row->id]);
+                $url_edit = route('products.edit',[$row->id]);
+                $url_del = route('products.destroy',[$row->id]);
+
+                $btn = '<a target="blank" href="' . $url_view . '" class="edit btn btn-info btn-sm">View</a>';
+                $btn .= '<a target="blank" href="' . $url_edit . '" class="edit btn btn-info btn-sm">Edit</a>';
+
+                $btn .= '<form action="' . $url_del .'" method="POST" class="form-inline">
+                    '.csrf_field().'
+                    '.method_field("DELETE").'
+                    <button type="submit" onclick="return confirm(\'Bạn có muốn xoá sản phẩm ' .
+                    $row->product_name .' không?\')"
+                        class="edit btn btn-danger btn-sm" style="display: inline-list">Delete</a>
+                    </form>';
 
                 return $btn;
             });
@@ -57,10 +67,8 @@ class ProductsDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
-            ->parameters([
-                'dom'          => 'Bfrtip',
-                'buttons'      => ['export', 'print', 'reset', 'reload'],
-            ]);
+            ->ajax('');
+
 
     }
 
@@ -73,7 +81,7 @@ class ProductsDataTable extends DataTable
     {
         return [
 
-            Column::make('product_id')
+            Column::make('id')
                 ->title('Id')
                 ->searchable(true)
                 ->orderable(true),

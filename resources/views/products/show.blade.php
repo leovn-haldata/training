@@ -20,7 +20,7 @@
                             {{ trans('cruds.product.fields.id') }}
                         </th>
                         <td>
-                            {{ $product->product_id }}
+                            {{ $product->id }}
                         </td>
                     </tr>
                     <tr>

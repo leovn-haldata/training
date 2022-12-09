@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Products;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
@@ -14,6 +16,7 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    use MediaUploadingTrait;
 
     public function index(ProductsDataTable $dataTable)
     {
@@ -49,7 +52,7 @@ class ProductsController extends Controller
     public function show($id)
     {
         //
-        $product = Products::where('product_id', $id)->first();
+        $product = Products::where('id', $id)->first();
 
         return view('products.show', ['product' => $product]);
     }
@@ -62,8 +65,9 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
-        return view('products.edit');
+        $product = Products::where('id', $id)->first();
+
+        return view('products.edit', ['product' => $product]);
 
     }
 
@@ -74,11 +78,20 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, Products $product)
     {
-        //
-    }
+        $product->update($request->all());
+        $data = UpdateProductRequest;
+        if($request->file('product_image')){
+            $file= $request->file('product_image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('public/Image'), $filename);
+            $data['product_image']= $filename;
+        }
+        $data->save();
 
+        return redirect()->route('products.index');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -88,5 +101,10 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         //
+        Products::where('id', $id)->delete();
+
+        return redirect()->route('products.index')->with('success', 'Deleted');
     }
+
+
 }

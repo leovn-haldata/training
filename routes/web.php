@@ -23,7 +23,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('products', ProductsController::class);
-
+    Route::post('products/media', 'ProductController@storeMedia')->name('products.storeMedia');
 });
 
 require __DIR__.'/auth.php';
