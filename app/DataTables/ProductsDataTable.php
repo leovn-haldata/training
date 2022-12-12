@@ -33,7 +33,7 @@ class ProductsDataTable extends DataTable
                 $url_del = route('products.destroy',[$row->id]);
 
                 $btn = '<a target="blank" href="' . $url_view . '" class="edit btn btn-info btn-sm">View</a>';
-                $btn .= '<a target="blank" href="' . $url_edit . '" class="edit btn btn-info btn-sm">Edit</a>';
+                $btn .= '<a href="' . $url_edit . '" class="edit btn btn-info btn-sm">Edit</a>';
 
                 $btn .= '<form action="' . $url_del .'" method="POST" class="form-inline">
                     '.csrf_field().'

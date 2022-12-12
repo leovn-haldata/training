@@ -21,6 +21,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "admin-lte": "^3.0",
         "datatables.net-bs4": "^1.13.1",
         "datatables.net-buttons-bs4": "^2.3.3",
         "datatables.net-searchpanes-bs4": "^2.1.0",

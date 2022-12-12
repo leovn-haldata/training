@@ -10,6 +10,13 @@ class Products extends Model
     use HasFactory;
     protected $table = 'mst_product';
 
+    protected $fillable = [
+        'product_name',
+        'description',
+        'product_image',
+        'product_price',
+
+    ];
 
 
 }

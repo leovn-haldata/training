@@ -12,7 +12,7 @@
             @csrf
             <div class="form-group">
                 <label class="required" for="product_name">{{ trans('cruds.product.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('product_name') ? 'is-invalid' : '' }}" type="text" name="name" id="product_name" value="{{ old('product_name', $product->product_name) }}" required>
+                <input class="form-control {{ $errors->has('product_name') ? 'is-invalid' : '' }}" type="text" name="product_name" id="product_name" value="{{ old('product_name', $product->product_name) }}" required>
                 @if($errors->has('product_name'))
                     <span class="text-danger">{{ $errors->first('product_name') }}</span>
                 @endif
@@ -38,8 +38,8 @@
                 <label for="photo">{{ trans('cruds.product.fields.photo') }}</label>
 {{--                <div class="dropzone {{ $errors->has('product_image') ? 'is-invalid' : '' }}" id="dropzone">--}}
 {{--                </div>--}}
-                <img src="{{ old('product_price', $product->product_image) }}" alt="" width="100">
-                <input type="file" value="$product->product_image" name="product_image" >
+                <img src="{{ old('product_image', asset($product->product_image)) }}" alt="" width="100">
+                <input type="file" value="{{ $product->product_image }}" name="product_image" >
                 @if($errors->has('product_image'))
                     <span class="text-danger">{{ $errors->first('product_image') }}</span>
                 @endif

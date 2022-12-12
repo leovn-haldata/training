@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('products', ProductsController::class);
-    Route::post('products/media', 'ProductController@storeMedia')->name('products.storeMedia');
+    Route::post('products/storeMedia', [ProductsController::class, 'storeMedia'])->name('products.storeMedia');
+
 });
 
 require __DIR__.'/auth.php';

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\UpdateProductRequest;
 use App\Models\Products;
-use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use App\DataTables\ProductsDataTable;
 
@@ -30,6 +28,7 @@ class ProductsController extends Controller
     public function create()
     {
         //
+        return view('products.create');
     }
 
     /**
@@ -40,7 +39,28 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = Products::create($request->all());
+
+        try {
+
+            if ($request->product_image) {
+                $file = $request->product_image;
+                $path = '/products/images';
+                $url = $this->uploadPublic($file, $path);
+                $product_image = url('/public')  . $url;
+                $product->product_image = $product_image;
+                $product->save();
+                return redirect()->route('products.index');
+
+            }
+
+        } catch (Throwable $e) {
+            report($e);
+
+            return false;
+        }
+
+//        return redirect()->route('products.index');
     }
 
     /**
@@ -78,19 +98,28 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Products $product)
+    public function update(Request $request, Products $product)
     {
-        $product->update($request->all());
-        $data = UpdateProductRequest;
-        if($request->file('product_image')){
-            $file= $request->file('product_image');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('public/Image'), $filename);
-            $data['product_image']= $filename;
-        }
-        $data->save();
+        try {
+            $product->update($request->all());
 
-        return redirect()->route('products.index');
+            if ($request->file('product_image')) {
+                $file = $request->file('product_image');
+                $path = '/products/images';
+                $url = $this->uploadFile($file,$path);
+                $product->product_image = url('/public')  . $url;
+
+            }
+
+            if($product->save()){
+                return redirect()->route('products.index');
+            }
+        } catch (Throwable $e) {
+            report($e);
+
+            return false;
+        }
+
     }
     /**
      * Remove the specified resource from storage.
