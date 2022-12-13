@@ -326,4 +326,7 @@ return [
     'leave'                          => 'Rời khỏi',
     'calendar'                       => 'Lịch',
     'messenger'                      => 'Các tin nhắn',
+    'group'                          => 'Nhóm',
+    'is_active'                          => 'Đang hoạt động',
+    'is_deactive'                          => 'Tạm khóa ',
 ];
