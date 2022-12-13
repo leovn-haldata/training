@@ -1,6 +1,6 @@
 @if(Auth::check())
 
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
         {{-- <a class="navbar-brand" href="{{ url('/') }}">
             Home
@@ -12,12 +12,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('products.index') }}">{{ __('Product') }}</a>
+            <ul class="navbar-nav">
+                <li class="nav-item {{ (request()->segment(1) == 'products') ? 'active' : '' }}">
+                    <a class="nav-link " href="{{ route('products.index') }}">{{ trans('global.product') }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('users.index') }}">{{ __('User') }}</a>
+                <li class="nav-item {{ (request()->segment(1) == 'users') ? 'active' : '' }}">
+                    <a class="nav-link " href="{{ route('users.index') }}">{{ __('Users') }}</a>
                 </li>
             </ul>
             <!-- Right Side Of Navbar -->

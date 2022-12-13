@@ -250,6 +250,7 @@ return [
     'product_management'             => 'Quản lý sản phẩm',
     'product_name'                   => 'Tên sản phẩm',
     'products'                       => 'Các sản phẩm',
+    'product'                        => 'Sản phẩm',
     'question'                       => 'Câu hỏi',
     'questions'                      => 'Câu hỏi',
     'recipient'                      => 'Người nhận',
