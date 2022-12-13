@@ -30,12 +30,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-
         try {
+            $request->authenticate();
+
+            $request->session()->regenerate();
             User::where('id', Auth::id())->update([
                 'last_login_at' => now(),
                 'last_login_ip' => $request->ip(),

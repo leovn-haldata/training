@@ -17,9 +17,7 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus placeholder="{{ trans('global.email') }}">
 
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <div class=" text-sm text-red-600" role="alert">{{ $errors->first('email') }}</div>
                                 @enderror
                             </div>
                         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-    protected $stopOnFirstFailure = false;
+    protected $stopOnFirstFailure = true;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -31,7 +32,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users','regex:/(.+)@(.+)\.(.+)/i'],
+            'email' => ['required', 'string', 'email', 'regex:/(.+)@(.+)\.(.+)/i'],
             'password' => ['required', 'string'],
         ];
     }
@@ -46,13 +47,31 @@ class LoginRequest extends FormRequest
     public function authenticate()
     {
         $this->ensureIsNotRateLimited();
-        if (! Auth::attempt($this->only('email','password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        try {
+            $checkUser = User::where('email',$this->input('email')) -> first();
 
-            throw ValidationException::withMessages([
-            'failed' => trans('auth.failed'),
-            ]);
+            if (!$checkUser) {
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.email'),
+                ]);
+
+            } else {
+                if (! Auth::attempt($this->only('email','password'), $this->boolean('remember'))) {
+                    RateLimiter::hit($this->throttleKey());
+
+                    throw ValidationException::withMessages([
+                        'password' => trans('auth.password'),
+                    ]);
+                }
+            }
+
+
+        } catch (Throwable $e) {
+            report($e);
+
+            return false;
         }
+
 
         RateLimiter::clear($this->throttleKey());
     }
