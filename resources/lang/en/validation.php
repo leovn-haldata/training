@@ -123,12 +123,12 @@ return [
         'array' => 'The :attribute must contain :size items.',
     ],
     'starts_with' => 'The :attribute must start with one of the following: :values.',
-    'string' => 'The :attribute must be a string.',
+    'string' => 'The :attribute Phải là một chuỗi.',
     'timezone' => 'The :attribute must be a valid timezone.',
-    'unique' => 'The :attribute has already been taken.',
-    'uploaded' => 'The :attribute failed to upload.',
-    'url' => 'The :attribute must be a valid URL.',
-    'uuid' => 'The :attribute must be a valid UUID.',
+    'unique' => ':attribute đã tồn tại.',
+    'uploaded' => 'The :attribute Không tải lên.',
+    'url' => 'The :attribute Phải là một URL hợp lệ.',
+    'uuid' => 'The :attribute Phải là một UUID hợp lệ.',
 
     /*
     |--------------------------------------------------------------------------

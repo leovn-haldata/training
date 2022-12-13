@@ -11,6 +11,8 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
+    protected $stopOnFirstFailure = false;
+
     /**
      * Determine if the user is authorized to make this request.
      *
