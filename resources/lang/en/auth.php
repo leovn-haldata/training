@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'failed' => 'Thông tin đăng nhập  không tồn tại.',
+    'failed' => 'Thông tin đăng nhập không tồn tại.',
     'email' => 'Email chưa được đăng ký.',
-    'password' => 'Mật khẩu được cung cấp không chính xác.',
+    'password' => 'Mật khẩu không chính xác.',
     'throttle' => 'Quá nhiều nỗ lực đăng nhập.Vui lòng thử lại trong: giây giây.',
 
 ];
