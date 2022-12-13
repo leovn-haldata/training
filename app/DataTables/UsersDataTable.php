@@ -31,20 +31,21 @@ class UsersDataTable extends DataTable
                 return (new \App\Http\Controllers\UsersController)->status($row->is_active);
             })
             ->addColumn('action', function($row) {
-                $url_view = route('users.show',[$row->id]);
+                $url_active = route('users.active',[$row->id]);
                 $url_edit = route('users.edit',[$row->id]);
                 $url_del = route('users.destroy',[$row->id]);
 
                 $btn  = '<div class="btn-toolbar mb-lg-1" role="group" aria-label="Basic example">';
-                $btn .= '<a target="blank" href="' . $url_view . '" class="btn  btn-sm"><i class="fa fa-eye"></i></a>';
                 $btn .= '<a href="' . $url_edit . '" class="btn"><i class="fa fa-pen"></i> </a>';
 
-                $btn .= '<form action="' . $url_del .'" method="POST">
+                $btn .= '<div><form action="' . $url_del .'" method="POST">
                     '.csrf_field().'
                     '.method_field("DELETE").'
                     <button type="submit" onclick="return confirm(\'Bạn có muốn xoá không?\')"
                         class="edit btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></a>
-                    </form>';
+                    </form></div>';
+                $btn .= '<a target="blank" href="' . $url_active . '" class="btn"><i class="fa fa-user-lock"></i></a>';
+
                 $btn .= '</div>';
                 return $btn;
             });
@@ -56,8 +57,10 @@ class UsersDataTable extends DataTable
      * @param User $model
      * @return Builder
      */
-    public function query(User $model)
+    public function query()
     {
+        $model = User::where(['is_delete' => 0]);
+
         return $model->newQuery();
     }
 
@@ -111,5 +114,10 @@ class UsersDataTable extends DataTable
     {
         $group = Roles::where('id', $id)->first();
         return $group->title;
+    }
+
+    public function isActive($id, $status)
+    {
+        return User::where(['id' => $id])->update(['is_active' => $status]);
     }
 }

@@ -15,6 +15,7 @@ return [
 
     'failed' => 'Thông tin đăng nhập không tồn tại.',
     'email' => 'Email chưa được đăng ký.',
+    'email_exists' => 'Email đã được đăng ký.',
     'password' => 'Mật khẩu không chính xác.',
     'throttle' => 'Quá nhiều nỗ lực đăng nhập.Vui lòng thử lại trong: giây giây.',
 

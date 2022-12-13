@@ -27,7 +27,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Roles::pluck('title', 'id');
+
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -38,10 +40,10 @@ class UsersController extends Controller
      */
     public function store(StoreUsersRequest $request)
     {
+        $request->isExitsUser();
         $user = User::create($request->all());
-        $user->roles()->sync($request->input('roles', []));
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -91,14 +93,29 @@ class UsersController extends Controller
      * @param  \App\Models\User  $users
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $users)
+    public function destroy(User $user)
     {
-        //
+
+        $user->is_delete = 1;
+        $user->is_active = 0;
+        $user->save();
+
     }
 
     public function status($id)
     {
         if ($id == 1 ) return trans('global.is_active');
         if ($id == 0 ) return trans('global.is_deactive');
+    }
+
+    public function isActive($id): \Illuminate\Http\RedirectResponse
+    {
+        $user =  User::find($id)->first();
+        $isActing = $user->is_active;
+        $user->is_active = (($isActing == 1) ? 0 : 1);
+        $user->save();
+
+        return back();
+
     }
 }

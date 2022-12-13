@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::post('products/storeMedia', [ProductsController::class, 'storeMedia'])->name('products.storeMedia');
 
     Route::resource('users', UsersController::class);
+    Route::get('users/active/{id}', [UsersController::class, 'isActive'])->name('users.active');
 
 });
 
