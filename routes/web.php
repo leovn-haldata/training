@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,12 +20,14 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('home');
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::resource('products', ProductsController::class);
     Route::post('products/storeMedia', [ProductsController::class, 'storeMedia'])->name('products.storeMedia');
+
+    Route::resource('users', UsersController::class);
 
 });
 

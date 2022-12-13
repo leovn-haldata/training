@@ -2,15 +2,17 @@
 
 namespace App\DataTables;
 
-use App\Http\Controllers\ProductsController;
-use App\Models\Products;
+use App\Http\Controllers\UsersController;
+use App\Models\Roles;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ProductsDataTable extends DataTable
+class UsersDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -20,17 +22,18 @@ class ProductsDataTable extends DataTable
      */
     public function dataTable($query)
     {
-
-
         return datatables()
             ->eloquent($query)
-            ->addColumn('description', function ($row) {
-                return substr($row->description, 0, 50);
+            ->addColumn('group_role', function ($row) {
+                return $this->getGroup($row->group_role);
+            })
+            ->addColumn('is_active', function ($row) {
+                return (new \App\Http\Controllers\UsersController)->status($row->is_active);
             })
             ->addColumn('action', function($row) {
-                $url_view = route('products.show',[$row->id]);
-                $url_edit = route('products.edit',[$row->id]);
-                $url_del = route('products.destroy',[$row->id]);
+                $url_view = route('users.show',[$row->id]);
+                $url_edit = route('users.edit',[$row->id]);
+                $url_del = route('users.destroy',[$row->id]);
 
                 $btn  = '<div class="btn-toolbar mb-lg-1" role="group" aria-label="Basic example">';
                 $btn .= '<a target="blank" href="' . $url_view . '" class="btn  btn-sm"><i class="fa fa-eye"></i></a>';
@@ -39,12 +42,10 @@ class ProductsDataTable extends DataTable
                 $btn .= '<form action="' . $url_del .'" method="POST">
                     '.csrf_field().'
                     '.method_field("DELETE").'
-                    <button type="submit" onclick="return confirm(\'Bạn có muốn xoá sản phẩm ' .
-                    $row->product_name .' không?\')"
-                        class="edit btn btn-danger btn-sm" style="display: inline-list"><i class="fa fa-trash-alt"></i></a>
+                    <button type="submit" onclick="return confirm(\'Bạn có muốn xoá không?\')"
+                        class="edit btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></a>
                     </form>';
                 $btn .= '</div>';
-
                 return $btn;
             });
     }
@@ -52,10 +53,10 @@ class ProductsDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Products $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param User $model
+     * @return Builder
      */
-    public function query(Products $model)
+    public function query(User $model)
     {
         return $model->newQuery();
     }
@@ -68,10 +69,11 @@ class ProductsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns())
-            ->ajax('');
-
-
+                    ->setTableId('users-table')
+                    ->columns($this->getColumns())
+                    ->minifiedAjax()
+                    ->dom('Bfrtip')
+                    ->orderBy(1);
     }
 
     /**
@@ -83,21 +85,16 @@ class ProductsDataTable extends DataTable
     {
         return [
 
-            Column::make('id')
-                ->title('Id')
-                ->searchable(true)
-                ->orderable(true),
-            Column::make('product_name')->title('Product Name'),
-            Column::make('description')->title('Description')
-            ->content(100),
-            Column::make('product_price')->title('Price'),
-            Column::make('is_sales')->title('Status'),
-            Column::make('created_at'),
+            Column::make('id')->title('#'),
+            Column::make('name')->title(trans('global.name')),
+            Column::make('email')->title(trans('global.email')),
+            Column::make('group_role')->title(trans('global.group')),
+            Column::make('is_active')->title(trans('global.status')),
             Column::computed('action')
-                ->exportable(true)
-                ->printable(true)
+                ->exportable(false)
+                ->printable(false)
                 ->addClass('text-center'),
-            ];
+        ];
     }
 
     /**
@@ -107,6 +104,12 @@ class ProductsDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Products_' . date('YmdHis');
+        return 'Users_' . date('YmdHis');
+    }
+
+    public function getGroup($id)
+    {
+        $group = Roles::where('id', $id)->first();
+        return $group->title;
     }
 }
