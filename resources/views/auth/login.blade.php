@@ -25,7 +25,7 @@
                         <div class="row mb-3">
 
                             <div class="col-md-12">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  autocomplete="current-password" placeholder="{{ trans('global.pasword') }}">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  autocomplete="current-password" placeholder="{{ trans('global.password') }}">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
