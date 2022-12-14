@@ -2,31 +2,30 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">{{ trans('global.login') }}</div>
-
+    <div class="row justify-content-center p-lg-5">
+        <div class="col-md-6">
+            <div class="card card-outline card-dark">
+                <div class="card-header">
+                    <div class="card-title">
+                        {{ trans('global.login') }}
+                    </div>
+                </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
                         <div class="row mb-3">
-
-                            <div class="col-md-12">
+                            <div class="col-md-12 input-group">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope"></i></span>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus placeholder="{{ trans('global.email') }}">
-
                                 @error('email')
                                 <div class=" text-sm text-red-600" role="alert">{{ $errors->first('email') }}</div>
                                 @enderror
                             </div>
                         </div>
-
                         <div class="row mb-3">
-
-                            <div class="col-md-12">
+                            <div class="col-md-12 input-group">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  autocomplete="current-password" placeholder="{{ trans('global.password') }}">
-
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -34,7 +33,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="row mb-3">
                             <div class="col-md-12">
                                 <div class="form-check">
@@ -46,7 +44,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row mb-0">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">
@@ -60,17 +57,16 @@
                                 @endif
                             </div>
                         </div>
-                        <hr>
-
-                        <div class="row mb-3">
-                            <div class="col-md-12 offset-md-4">
-
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="row mb-3">
+                        <div class="col-md-12 offset-md-4">
                             <a class="btn btn-link" href="{{ route('register') }}">
                                 {{ trans('global.register') }}
                             </a>
                         </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

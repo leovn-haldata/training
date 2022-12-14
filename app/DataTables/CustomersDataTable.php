@@ -55,17 +55,8 @@ class CustomersDataTable extends DataTable
                     ->setTableId('customers-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom('<"wrapper"fltip>')
-                    ->orderBy(1)
-                    ->parameters([
-                        'paging' => true,
-                        'searching' => true,
-                        'info' => false,
-                        'searchDelay' => 350,
-                        'language' => [
-                            'url' => 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/vi.json'
-                        ],
-                    ]);
+                    ->dom(   'lBfrtip<"actions">')
+                    ->orderBy('0');
     }
 
     /**
@@ -77,7 +68,7 @@ class CustomersDataTable extends DataTable
     {
         return [
             Column::make('id')
-                ->title('$'),
+                ->title('#'),
             Column::make('customer_name')
                 ->title(trans('cruds.customer.fields.full_name')),
             Column::make('email')
