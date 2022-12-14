@@ -56,6 +56,8 @@
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
+ 
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.13.1/sp-2.1.0/datatables.min.js"></script>
 
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <link

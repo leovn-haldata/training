@@ -16,6 +16,9 @@
                 <li class="nav-item {{ (request()->segment(1) == 'products') ? 'active' : '' }}">
                     <a class="nav-link " href="{{ route('products.index') }}">{{ trans('global.product') }}</a>
                 </li>
+                <li class="nav-item {{ (request()->segment(1) == 'customers') ? 'active' : '' }}">
+                    <a class="nav-link " href="{{ route('customers.index') }}">{{ trans('global.customer') }}</a>
+                </li>
                 <li class="nav-item {{ (request()->segment(1) == 'users') ? 'active' : '' }}">
                     <a class="nav-link " href="{{ route('users.index') }}">{{ __('Users') }}</a>
                 </li>

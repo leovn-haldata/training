@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('users', UsersController::class);
     Route::get('users/active/{id}', [UsersController::class, 'isActive'])->name('users.active');
+
+    Route::resource('customers', CustomerController::class);
 
 });
 
