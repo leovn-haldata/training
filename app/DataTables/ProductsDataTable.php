@@ -27,6 +27,7 @@ class ProductsDataTable extends DataTable
             ->addColumn('description', function ($row) {
                 return substr($row->description, 0, 50);
             })
+            ->addIndexColumn()
             ->addColumn('action', function($row) {
                 $url_view = route('products.show',[$row->id]);
                 $url_edit = route('products.edit',[$row->id]);

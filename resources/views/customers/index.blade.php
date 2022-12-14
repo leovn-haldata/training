@@ -8,6 +8,7 @@
         </div>
         <div class="card-body">
             {!! $dataTable->table() !!}
+            {{-- <table id="customers-table"></table> --}}
 
         </div>
     </div>

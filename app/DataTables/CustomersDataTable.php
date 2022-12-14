@@ -55,7 +55,6 @@ class CustomersDataTable extends DataTable
                     ->setTableId('customers-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom(   'lBfrtip<"actions">')
                     ->orderBy('0');
     }
 

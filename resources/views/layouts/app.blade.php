@@ -76,30 +76,50 @@
   let selectAllButtonTrans = '{{ trans('global.select_all') }}'
   let selectNoneButtonTrans = '{{ trans('global.deselect_all') }}'
 
-  let languages = {
-    'en': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/English.json',
-        'vi': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Vietnamese.json'
-  };
-  let tb  =  "<'row'<'col-md-10 offset-md-2'p>>" 
-      tb +=  "<'row'<'col-sm-10 offset-sm-2 col-md-10 offset-md-2'>i>" 
-      tb +=  "<'row'<'col-sm-12 col-md-12'tp>>"
+ 
+  let tb  = "<'row'<'col-md-12'f>>" 
+      tb += "<'row'<'col-md-5 offset-md-4'p><'col-md-3 tbinfo'i>>" 
+      tb += "<'row'<'col-sm-12 col-md-12'rt>>"
+      tb += "<'row'<'offset-md-4 col-md-8 'pi>>"
   $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, { className: 'btn' })
   $.extend(true, $.fn.dataTable.defaults, {
     language: {
-      url: languages['vi']
+        "sProcessing":   "Đang xử lý...",
+        "sLengthMenu":   "Xem _MENU_ mục",
+        "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+        "sInfo":         "Hiển thị _START_ ~ _END_ trong tổng số _TOTAL_ mục",
+        "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+        "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+        "sInfoPostFix":  "",
+        "sSearch":       "Tìm:",
+        "sUrl":          "",
+        "oPaginate": {
+            "sFirst":    "Đầu",
+            "sPrevious": "Trước",
+            "sNext":     "Tiếp",
+            "sLast":     "Cuối"
+        }
     },
     dom: tb,
 });
   $.fn.dataTable.ext.classes.sPageButton = '';
+ 
 });
     </script>
     <style>
-        #dataTableBuilder th {
+        .table > thead {
             color: white;
             background-color: red
         }
-        #dataTableBuilder_paginate {
+        #dataTableBuilder_paginate, 
+        .dataTables_wrapper .dataTables_paginate {
             float: left;
+        }
+        .paging {
+
+        }
+        .tbinfo {
+            text-align: left
         }
     </style>
     @stack('scripts')
