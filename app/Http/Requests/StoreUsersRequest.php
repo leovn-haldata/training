@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Rules;
 
 class StoreUsersRequest extends FormRequest
 {
@@ -30,7 +31,7 @@ class StoreUsersRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email', 'regex:/(.+)@(.+)\.(.+)/i'],
             'name' => ['required', 'string'],
-            'password' => ['required', 'string'],
+            'password' => ['required', 'confirmed','required_with:password_confirmation|same:password_confirmation', Rules\Password::defaults()],
         ];
     }
 

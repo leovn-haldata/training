@@ -36,8 +36,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="roles">{{ trans('cruds.user.fields.roles') }}</label>
-                
-                <select class="form-control {{ $errors->has('roles') ? 'is-invalid' : '' }}" name="group_role" id="roles" multiple required>
+                <select class="form-control {{ $errors->has('roles') ? 'is-invalid' : '' }}" name="group_role" id="roles" >
                     @foreach($roles as $id => $role)
                     <option value="{{ $id }}" {{ ( $id == $user->group_role) ? 'selected' : '' }}>{{ $role }}</option>
                 @endforeach

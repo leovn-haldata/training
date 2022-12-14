@@ -68,7 +68,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Roles::pluck('title', 'id');
+        $roles = Roles::orderBy('id','DESC')->pluck('title', 'id');
 
         return view('users.edit', compact('roles', 'user'));
     }
@@ -110,9 +110,8 @@ class UsersController extends Controller
 
     public function isActive($id): \Illuminate\Http\RedirectResponse
     {
-        $user =  User::find($id)->first();
-        $isActing = $user->is_active;
-        $user->is_active = (($isActing == 1) ? 0 : 1);
+        $user =  User::where(['id' => $id])->first();
+        $user->is_active = (($user->is_active == 1) ? 0 : 1);
         $user->save();
 
         return back();

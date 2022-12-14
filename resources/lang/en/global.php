@@ -224,7 +224,7 @@ return [
     'email'                          => 'Email',
     'email'                          => 'Email',
     'password'                       => 'Mật khẩu',
-    'password_confim'                => 'Xác nhận mật khẩu',
+    'password_confim'                => 'Xác nhận',
     'new_calendar_source'            => 'Tạo nguồn lịch mới',
     'new_password'                   => 'Mật khẩu mới',
     'no_calendar_sources'            => 'Chưa có nguồn lịch nào.',
@@ -328,6 +328,7 @@ return [
     'calendar'                       => 'Lịch',
     'messenger'                      => 'Các tin nhắn',
     'group'                          => 'Nhóm',
+    'group_error'                    => 'Sai nhóm hoặc id nhóm không tồn tại',
     'is_active'                          => 'Đang hoạt động',
     'is_deactive'                          => 'Tạm khóa ',
 ];
