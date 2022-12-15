@@ -77,6 +77,7 @@ class CustomersDataTable extends DataTable
             Column::make('tel_num')
                 ->title(trans('cruds.customer.fields.phone')),
             Column::computed('action')
+                ->width('15%')
                 ->title('')
                 ->addClass('text-center'),
         ];

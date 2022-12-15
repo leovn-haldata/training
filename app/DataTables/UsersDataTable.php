@@ -96,6 +96,8 @@ class UsersDataTable extends DataTable
             Column::make('group_role')->title(trans('global.group')),
             Column::make('is_active')->title(trans('global.status')),
             Column::computed('action')
+                ->title('')
+                ->width('15%')
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center'),

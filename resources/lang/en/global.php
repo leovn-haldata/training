@@ -2,7 +2,7 @@
 
 return [
     'actions'                        => 'Actions',
-    'add'                            => 'Thêm',
+    'add'                            => 'Thêm mới',
     'allRightsReserved'              => 'Bản quyền',
     'areYouSure'                     => 'Bạn chắc không?',
     'clickHereToVerify'              => 'Bấm vào đây để xác minh',
@@ -269,6 +269,8 @@ return [
     'select_dt_placeholder'          => 'Vui lòng chọn một trong các trường ngày/giờ',
     'select_users_placeholder'       => 'Vui lòng chọn một trong những Người dùng của bạn',
     'send'                           => 'Gửi',
+    'search'                         => 'Tìm kiếm',
+    'search_clear'                   => 'Xóa tìm',
     'serial_number'                  => 'Số sê-ri',
     'simple_user'                    => 'Người dùng đơn giản',
     'skype'                          => 'Skype',

@@ -4,10 +4,12 @@ namespace App\DataTables;
 
 use App\Http\Controllers\ProductsController;
 use App\Models\Products;
+use App\Models\User;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
+use Yajra\DataTables\Html\SearchPane;
 use Yajra\DataTables\Services\DataTable;
 
 class ProductsDataTable extends DataTable
@@ -24,8 +26,18 @@ class ProductsDataTable extends DataTable
 
         return datatables()
             ->eloquent($query)
+//            ->filter(function ($query) {
+//                if (request()->has('product_name')) {
+//                    $query->where('product_name', 'like', "%" . request('name') . "%");
+//                }
+//
+//
+//            })
             ->addColumn('description', function ($row) {
                 return substr($row->description, 0, 50);
+            })
+            ->addColumn('is_sales', function ($row) {
+                return ($row->is_sales == 1 ? 'Đang bán' : 'Ngừng bán');
             })
             ->addIndexColumn()
             ->addColumn('action', function($row) {
@@ -33,8 +45,8 @@ class ProductsDataTable extends DataTable
                 $url_edit = route('products.edit',[$row->id]);
                 $url_del = route('products.destroy',[$row->id]);
 
-                $btn  = '<div class="btn-toolbar mb-lg-1" role="group" aria-label="Basic example">';
-                $btn .= '<a target="blank" href="' . $url_view . '" class="btn  btn-sm"><i class="fa fa-eye"></i></a>';
+                $btn  = '<div class="btn-toolbar mb-lg-1" role="group" >';
+//                $btn .= '<a target="blank" href="' . $url_view . '" class="btn  btn-sm"><i class="fa fa-eye"></i></a>';
                 $btn .= '<a href="' . $url_edit . '" class="btn"><i class="fa fa-pen"></i> </a>';
 
                 $btn .= '<form action="' . $url_del .'" method="POST">
@@ -85,16 +97,25 @@ class ProductsDataTable extends DataTable
         return [
 
             Column::make('id')
-                ->title('Id')
-                ->searchable(true)
+                ->title(' ')
+                ->searchPanes(false)
                 ->orderable(true),
-            Column::make('product_name')->title('Product Name'),
-            Column::make('description')->title('Description')
-            ->content(100),
-            Column::make('product_price')->title('Price'),
-            Column::make('is_sales')->title('Status'),
-            Column::make('created_at'),
+            Column::make('product_name')
+                ->title(trans('cruds.product.fields.name')),
+            Column::make('description')
+                ->searchPanes(false)
+                ->title(trans('cruds.product.fields.description'))
+                ->content(100),
+            Column::make('product_price')
+                ->searchPanes(true)
+                ->title(trans('cruds.product.fields.price')),
+            Column::make('is_sales')
+                ->addClass('is_sales')
+                ->title(trans('cruds.product.fields.status')),
             Column::computed('action')
+                ->searchPanes(false)
+                ->width('15%')
+                ->title('')
                 ->exportable(true)
                 ->printable(true)
                 ->addClass('text-center'),

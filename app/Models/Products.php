@@ -18,5 +18,11 @@ class Products extends Model
 
     ];
 
-
+    static function getStatus()
+    {
+        return collect([
+            [ 'val' => 0, 'status' => 'Ngừng bán'],
+            [ 'val' => 1, 'status' => 'Đang bán'],
+        ]);
+    }
 }

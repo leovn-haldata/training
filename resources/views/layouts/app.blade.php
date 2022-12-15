@@ -67,24 +67,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script>
         $(function() {
-  let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
-  let csvButtonTrans = '{{ trans('global.datatables.csv') }}'
-  let excelButtonTrans = '{{ trans('global.datatables.excel') }}'
-  let pdfButtonTrans = '{{ trans('global.datatables.pdf') }}'
-  let printButtonTrans = '{{ trans('global.datatables.print') }}'
-  let colvisButtonTrans = '{{ trans('global.datatables.colvis') }}'
-  let selectAllButtonTrans = '{{ trans('global.select_all') }}'
-  let selectNoneButtonTrans = '{{ trans('global.deselect_all') }}'
-
+  
  
-  let tb  = "<'row'<'col-md-12'f>>" 
-      tb += "<'row'<'col-md-5 offset-md-4'p><'col-md-3 tbinfo'i>>" 
-      tb += "<'row'<'col-sm-12 col-md-12'rt>>"
-      tb += "<'row'<'offset-md-4 col-md-8 'pi>>"
-  $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, { className: 'btn' })
+  let tb  = "<'row'<'col-md-12'>r>" 
+      tb += "<'row'<'col-md-5 offset-md-4'p><'col-md-3'i>>" 
+      tb += "<'row'<'col-sm-12 col-md-12't>>"
+      tb += "<'row'<'offset-md-4 col-md-8 'p>>"
   $.extend(true, $.fn.dataTable.defaults, {
     language: {
-        "sProcessing":   "Đang xử lý...",
+        "sProcessing":   '<div class="spinner processing">' + "Đang xử lý..." + '</div>',
         "sLengthMenu":   "Xem _MENU_ mục",
         "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
         "sInfo":         "Hiển thị _START_ ~ _END_ trong tổng số _TOTAL_ mục",
@@ -102,7 +93,6 @@
     },
     dom: tb,
 });
-  $.fn.dataTable.ext.classes.sPageButton = '';
  
 });
     </script>
@@ -120,6 +110,29 @@
         }
         .tbinfo {
             text-align: left
+        }
+        #dataTableBuilder_processing {
+            z-index: 999;
+            background-color: none;
+            color: red;
+            margin-bottom: 0;
+            text-transform: uppercase;
+            
+        }
+        .dataTables_processing .card {
+            box-shadow: none !important
+        }
+        .dataTables_wrapper .dataTables_processing {
+            position: absolute;
+            top: 0% !important;
+            left: 50%;
+            width: 100%;
+            height: 40px;
+            margin-left: -50%;
+            margin-top: -25px;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
         }
     </style>
     @stack('scripts')
