@@ -1,7 +1,5 @@
 @php
-    $status = \App\Models\Products::getStatus()
-        ->sortBy('val')
-        ->pluck('status');
+    
 @endphp
 @extends('layouts.app')
 
@@ -63,36 +61,163 @@
             </div>
 
             <div class="row justify-content-center align-items-center g-2">
-                {!! $dataTable->table() !!}
+                {{-- {!! $dataTable->table() !!} --}}
+                <table class="table table-striped yajra-datatable" style="padding-top:10px;">
+                    <thead class="">
+                        <tr>
+                            <th></th>
+                            <th>{{ trans('cruds.product.fields.name') }}</th>
+                            <th>{{ trans('cruds.product.fields.description') }}</th>
+                            <th>{{ trans('cruds.product.fields.price') }}</th>
+                            <th>{{ trans('cruds.product.fields.status') }}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 @endsection
 
 @push('scripts')
-    {!! $dataTable->scripts() !!}
-<script type="text/javascript">
-$(function() {
+    {{-- {!! $dataTable->scripts() !!} --}}
+    <script type="text/javascript">
+        $(function() {
+            var table = $('.yajra-datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('products.index') }}",
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'product_name',
+                        name: 'product_name'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
+                    },
+                    {
+                        data: 'product_price',
+                        name: 'product_price'
+                    },
+                    {
+                        data: 'is_sales',
+                        name: 'is_sales'
+                    },
+                    // {
+                    //     data: 'action',
+                    //     name: 'action',
+                    //     orderable: true,
+                    //     searchable: true
+                    // },
+                ],
+                columnDefs: [
+                    {
+                        targets: [0, 2,4], 
+                        searchable: false
+                    }
+                ],
+                search: {
+                    regex: true
+                },
+                success: function (response) {
+                       console.log(response);
+                }
+            });
 
-    var table = $('#dataTableBuilder').DataTable();
- 
-    $('#btnSearch').on('click', function ($e) {
-        var name = $('#fName').val();
-        var status = $('#fStatus').val();
-        var price_from = $('#fPriceFrom').val();
-        var price_to = $('#fPriceTo').val();
-        var keyword  = name + ' ' + price_from + ' ' + price_to
-            var val = $.fn.dataTable.util.escapeRegex(keyword);
-        
-            console.log(keyword);
-            console.log(val);
-       
-        table.search(val, true).draw();
-        // table.search( keyword ).draw();
-        
-    });
+            $('#btnSearch').on('click', function() {
+                var name = $('#fName').val();
+                var status = parseInt($('#fStatus').val(), 10);
+                var price_from = $('#fPriceFrom').val();
+                var price_to = $('#fPriceTo').val();
+                var keyword = name + ' ' + status + ' ' + price_from + ' ' + price_to
+
+                // table.search(keyword).draw();
+                $.ajax({
+                    type: "get",
+                    url: "{{ route('products.index') }}",
+                    data: 'product_name=' + keyword,
+                    // dataType: "dataType",
+                    success: function (response) {
+                        // console.log(response);
+                        var table = $('.yajra-datatable').DataTable();
+                        table.draw();
+                        // table.search(keyword).draw();
+                    }
+                });
+                table.draw();
+
+            });
+
+        });
+   
+    </script>
+    <script type="text/javascript">
+        $(function() {
 
 
-});      
-</script>
+
+
+
+            // $('#btnSearch').on('click', function () {
+            //     var table = $('#dataTableBuilder').DataTable({
+            //     search: {
+            //     regex: true,
+            //     searching: false
+            //   }
+            // });
+            //     var name = $('#fName').val();
+            //     var status = parseInt($('#fStatus').val(), 10);
+            //     var price_from = $('#fPriceFrom').val();
+            //     var price_to = $('#fPriceTo').val();
+            //     var keyword  = name + ' ' + status + ' ' + price_from + ' ' + price_to
+
+            //         // var val = $.fn.dataTable.util.escapeRegex(keyword);
+
+            //     console.log(keyword);
+            //     var data = table
+            //         .column( 2 )
+            //         .search(keyword)
+            //         .data();
+
+            //     data.push( 'Fini' );
+            // table.columns([2,4]).search([keyword, status]).draw();
+            // table.search( keyword ).draw();
+
+            // });
+
+            // $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            //     var min = parseInt($('#min').val(), 10);
+            //     var max = parseInt($('#max').val(), 10);
+            //     var age = parseFloat(data[3]) || 0; // use data for the age column
+
+            //     if (
+            //         (isNaN(min) && isNaN(max)) ||
+            //         (isNaN(min) && age <= max) ||
+            //         (min <= age && isNaN(max)) ||
+            //         (min <= age && age <= max)
+            //     ) {
+            //         return true;
+            //     }
+            //     return false;
+            // });
+
+            // $(document).ready(function () {
+            //     var table = $('#example').DataTable();
+
+            //     // Event listener to the two range filtering inputs to redraw on input
+            //     $('#min, #max').keyup(function () {
+            //         table.draw();
+            //     });
+            // });
+
+            // console.log(table.draw);
+
+        });
+    </script>
 @endpush

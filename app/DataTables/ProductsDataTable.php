@@ -26,13 +26,6 @@ class ProductsDataTable extends DataTable
 
         return datatables()
             ->eloquent($query)
-//            ->filter(function ($query) {
-//                if (request()->has('product_name')) {
-//                    $query->where('product_name', 'like', "%" . request('name') . "%");
-//                }
-//
-//
-//            })
             ->addColumn('description', function ($row) {
                 return substr($row->description, 0, 50);
             })
@@ -83,8 +76,6 @@ class ProductsDataTable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->ajax('');
-
-
     }
 
     /**
@@ -107,7 +98,6 @@ class ProductsDataTable extends DataTable
                 ->title(trans('cruds.product.fields.description'))
                 ->content(100),
             Column::make('product_price')
-                ->searchPanes(true)
                 ->title(trans('cruds.product.fields.price')),
             Column::make('is_sales')
                 ->addClass('is_sales')

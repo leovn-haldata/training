@@ -6,6 +6,9 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use App\DataTables\ProductsDataTable;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables as DataTables;
+;
 
 class ProductsController extends Controller
 {
@@ -16,9 +19,71 @@ class ProductsController extends Controller
      */
     use MediaUploadingTrait;
 
-    public function index(ProductsDataTable $dataTable)
+    /**
+     * @throws \Exception
+     */
+    public function data(Request $request)
     {
-        return $dataTable->render('products.index');
+    }
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $model = Products::query();
+//            $model->where('is_sales','=', 1);
+
+//            if ( $request->input('keyword')) {
+//                $model->where('is_sales','=', 1)
+//                      ->where('product_name', 'like',$request->input('keyword'));
+//            }
+
+
+            return (new \Yajra\DataTables\DataTables)->eloquent($model)
+                ->filter(function ($model) use ($request) {
+//                    if ($request->input('product_name')) {
+////                                            dd($request->input('product_name'));
+////                    $model->where('is_sales','=', 1);
+//                        $query =  $model->where('product_name', 'like', "%" . $request->input('product_name') . "%");
+////                        dd($query->get());
+////                        $query->where('is_sales', 1);
+//                    }
+
+//                    if (request()->has('keyword')) {
+//                        $query->where('email', 'like', "%" . request('email') . "%");
+//                    }
+                }, true)
+                ->toJson();
+//                ->addColumn('description', function ($row) {
+//                    return substr($row->description, 0, 50);
+//                })
+//                ->addColumn('is_sales', function ($row) {
+//                    return ($row->is_sales == 1 ? 'Đang bán' : 'Ngừng bán');
+//                })
+//                ->addIndexColumn()
+//                ->addColumn('action', function($row) {
+//                    $url_edit = route('products.edit',[$row->id]);
+//                    $url_del = route('products.destroy',[$row->id]);
+//
+//                    $btn  = '<div class="btn-toolbar mb-lg-1" role="group" >';
+//                    $btn .= '<a href="' . $url_edit . '" class="btn"><i class="fa fa-pen"></i> </a>';
+//
+//                    $btn .= '<form action="' . $url_del .'" method="POST">
+//                    '.csrf_field().'
+//                    '.method_field("DELETE").'
+//                    <button type="submit" onclick="return confirm(\'Bạn có muốn xoá sản phẩm ' .
+//                        $row->product_name .' không?\')"
+//                        class="edit btn btn-danger btn-sm" style="display: inline-list"><i class="fa fa-trash-alt"></i></a>
+//                    </form>';
+//                    $btn .= '</div>';
+//
+//                    return $btn;
+//                })
+//                ->rawColumns(['action'])
+//                ->make(true);
+        }
+        $status = \App\Models\Products::getStatus()
+            ->sortBy('val')
+            ->pluck('status');
+        return view('products.index', ['status' => $status]);
     }
     /**
      * Show the form for creating a new resource.

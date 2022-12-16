@@ -13,7 +13,7 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.$ = window.jQuery = require('jquery');
+// window.$ = window.jQuery = require('jquery');
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -30,8 +30,4 @@ window.$ = window.jQuery = require('jquery');
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-require('bootstrap');
-require('datatables.net-bs4');
-require('datatables.net-buttons-bs4');
-require('datatables.net-select-bs4');
-require('datatables.net-searchpanes-bs4');
+
